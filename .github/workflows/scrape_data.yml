@@ -1,0 +1,47 @@
+name: Run Live Data Scraper
+
+# Dit zorgt ervoor dat je de actie handmatig kunt triggeren via de 'Actions' tab
+on:
+  workflow_dispatch:
+
+jobs:
+  scrape_and_commit:
+    runs-on: ubuntu-latest
+    
+    # Geef de action schrijfrechten om de data terug te pushen naar je repo
+    permissions:
+      contents: write
+
+    steps:
+    # 1. Haal de code uit de repository op
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    # 2. Installeer Python op de virtuele Ubuntu machine
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    # 3. Installeer de benodigde Python pakketjes
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas requests beautifulsoup4
+
+    # 4. Voer jouw data_fetcher script uit
+    - name: Run data scraper
+      run: python src/data_fetcher.py
+
+    # 5. Check of er nieuwe data is en push dit automatisch terug in de 'data' map
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "No changes in data detected."
+        else
+          git commit -m "Automated data update: Scraped live Lithium data"
+          git push
+        fi
