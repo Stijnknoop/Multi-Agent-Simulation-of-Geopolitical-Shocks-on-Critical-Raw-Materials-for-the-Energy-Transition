@@ -1,6 +1,6 @@
 name: Run AI Agent Simulation
 
-# Handmatige trigger via de 'Actions' tab
+# Simple manual trigger via the 'Actions' tab
 on:
   workflow_dispatch:
 
@@ -8,25 +8,44 @@ jobs:
   run_agents:
     runs-on: ubuntu-latest
 
+    # Give the action permission to push the generated report back to your repo
+    permissions:
+      contents: write
+
     steps:
-    # 1. Haal de code uit de repository op
     - name: Checkout repository code
       uses: actions/checkout@v4
 
-    # 2. Installeer Python
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
-    # 3. FIX: Installeer CrewAI inclusief de officiële Google Gen AI extensies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install "crewai[google-genai]"
 
-    # 4. Voer de AI-agents uit en koppel de geheime Gemini Key
     - name: Run AI Agent Simulation
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      run: python src/agents.py
+      run: python src/main.py
+
+    # NEW: Automatically commit and push the new simulation report to the results folder
+    - name: Commit and push simulation results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Check if the results directory exists and has files
+        if [ -d results ] && [ "$(ls -A results)" ]; then
+          git add results/
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No new reports detected."
+          else
+            git commit -m "Automated AI Update: Saved new geopolitical simulation report"
+            git push
+          fi
+        else
+          echo "⚠️ No results found to commit."
+        fi
