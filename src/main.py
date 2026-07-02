@@ -1,7 +1,12 @@
+# Standard library imports
 import asyncio
 import os
 from datetime import datetime
+
+# Third-party library imports
 from crewai import Task, Crew
+
+# Local imports
 from agents import GeoSupplyAgents
 
 def load_scraped_data() -> str:
