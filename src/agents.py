@@ -5,14 +5,31 @@ class GeoSupplyAgents:
     def __init__(self):
         print("🚀 Connecting to Google AI Studio (Gemini Engine)...")
         
+        # Veilig ophalen van de API-key uit de GitHub Secrets kluis
         api_key = os.getenv("GEMINI_API_KEY")
         if not api_key:
-            raise ValueError("❌ ERROR: GEMINI_API_KEY is niet ingesteld!")
+            raise ValueError("❌ ERROR: GEMINI_API_KEY is niet ingesteld in de omgevingsvariabelen!")
 
+        # We gebruiken het geavanceerde Gemini 2.5 Flash model
         self.gemini_llm = LLM(
             model="gemini/gemini-2.5-flash",
             temperature=0.5,
             api_key=api_key
+        )
+
+    def scenario_generator(self) -> Agent:
+        """Agent 0: De Strategisch Futurist (Scenario Generator)"""
+        return Agent(
+            role="Strategic Foresight Expert & Lithium Market Futurist",
+            goal="Design concise geopolitical crisis scenarios strictly focused on Lithium, batteries, and critical raw materials under 150 words.",
+            backstory=(
+                "You are an expert in green technology and battery value chains. You excel at taking current "
+                "production metrics and international tensions to craft complex, brief 'what-if' shock scenarios "
+                "(under 150 words) that expose Western vulnerabilities in critical raw material access."
+            ),
+            llm=self.gemini_llm,
+            verbose=True,
+            allow_delegation=False
         )
 
     def geopolitical_analyst(self) -> Agent:
