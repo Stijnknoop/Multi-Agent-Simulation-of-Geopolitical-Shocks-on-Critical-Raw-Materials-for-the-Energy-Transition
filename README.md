@@ -11,9 +11,9 @@ The entire system is powered by **CrewAI** and **Google Gemini 2.5 Flash**, full
 The global energy transition relies heavily on secure supply chains for critical raw materials. This project simulates unexpected geopolitical and economic "shocks" to stress-test Western supply chains (specifically focusing on **Lithium and batteries**) and autonomously generates executive-ready strategic advice.
 
 ### Key Capabilities:
-* **Automated Data Scraping (Week 1):** A Python-based pipeline that dynamically scrapes live market, production, and reserve data from global sources (e.g., Wikipedia) and saves it as structured data.
-* **Autonomous Think Tank (Week 2):** A coordinated crew of 4 specialized AI agents that ingest real-world data, simulate strategic crises, calculate industrial deficits, and formulate policy briefs.
-* **Production-Ready Containerization (Week 3):** Fully containerized using Docker with pinned dependencies (`requirements.txt`), ensuring 100% reproducible environments for cloud deployment.
+* **Automated Data Scraping:** A Python-based pipeline that dynamically scrapes live market, production, and reserve data from global sources (e.g., Wikipedia) and saves it as structured data.
+* **Autonomous Think Tank:** A coordinated crew of 4 specialized AI agents that ingest real-world data, simulate strategic crises, calculate industrial deficits, and formulate policy briefs.
+* **Production-Ready Containerization:** Fully containerized using Docker with pinned dependencies (`requirements.txt`), ensuring 100% reproducible environments for cloud deployment.
 
 ---
 
