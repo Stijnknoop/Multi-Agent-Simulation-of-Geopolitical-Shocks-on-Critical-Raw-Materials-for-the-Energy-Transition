@@ -1,5 +1,8 @@
+# Standard library imports
 import os
 import re
+
+#Third-party library imports
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
