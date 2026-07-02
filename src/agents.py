@@ -11,9 +11,9 @@ class GeoSupplyAgents:
         if not api_key:
             raise ValueError("❌ ERROR: GEMINI_API_KEY is niet ingesteld in de omgevingsvariabelen!")
 
-        # We gebruiken het geavanceerde Gemini 2.0 Flash model
+        # We gebruiken het geavanceerde Gemini 2.5 Flash model
         self.gemini_llm = LLM(
-            model="gemini/gemini-2.0-flash",
+            model="gemini/gemini-2.5-flash",
             temperature=0.5,
             api_key=api_key
         )
