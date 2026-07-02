@@ -19,11 +19,11 @@ jobs:
       with:
         python-version: '3.11'
 
-    # 3. Installeer alleen CrewAI (meer hebben de agents niet nodig)
+    # 3. FIX: Installeer CrewAI inclusief de officiële Google Gen AI extensies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install crewai
+        pip install "crewai[google-genai]"
 
     # 4. Voer de AI-agents uit en koppel de geheime Gemini Key
     - name: Run AI Agent Simulation
